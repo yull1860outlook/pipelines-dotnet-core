@@ -1,0 +1,120 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_labapp_git_win_name": {
+            "defaultValue": "labapp-git-win",
+            "type": "String"
+        },
+        "serverfarms_ASP_appsvcwin_a806_externalid": {
+            "defaultValue": "/subscriptions/97ddcfbc-3a05-404d-9edb-7a77ed5f4f25/resourceGroups/appsvc-win/providers/Microsoft.Web/serverfarms/ASP-appsvcwin-a806",
+            "type": "String"
+        },
+		 "appset1": {  "type": "String" },
+		 "appset2": {  "type": "String" },
+		 "appset3": {  "type": "String" }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('sites_labapp_git_win_name')]",
+            "location": "Southeast Asia",
+            "kind": "app",
+            "properties": {
+                "enabled": true,  
+                "serverFarmId": "[parameters('serverfarms_ASP_appsvcwin_a806_externalid')]",
+                "reserved": false,
+                "isXenon": false,
+                "hyperV": false,
+                "scmSiteAlsoStopped": false,
+                "clientAffinityEnabled": false,
+                "clientCertEnabled": false,
+                "hostNamesDisabled": false,
+                "containerSize": 0,
+                "dailyMemoryTimeQuota": 0,
+                "httpsOnly": false,
+                "redundancyMode": "None",
+				"siteConfig": {
+					 "numberOfWorkers": 1,
+					"defaultDocuments": [
+						"Default.htm",
+						"Default.html",
+						"Default.asp",
+						"index.htm",
+						"index.html",
+						"iisstart.htm",
+						"default.aspx",
+						"index.php",
+						"hostingstart.html"
+					],
+					 "appSettings": [
+					  {
+						"name": "appset1",
+						"value": "[parameters('appset1')]"
+					  },
+					  {"name": "appset2",
+						"value": "[parameters('appset2')]"},
+					  {"name": "appset3",
+						"value": "[parameters('appset3')]"}
+					],
+					"netFrameworkVersion": "v4.0",
+					"phpVersion": "5.6",
+					"pythonVersion": "3.4",
+					"requestTracingEnabled": true,
+					"requestTracingExpirationTime": "9999-12-31T23:59:00Z",
+					"remoteDebuggingEnabled": false,
+					"remoteDebuggingVersion": "VS2019",
+					"httpLoggingEnabled": true,
+					"logsDirectorySizeLimit": 35,
+					"detailedErrorLoggingEnabled": true,
+					"publishingUsername": "$labapp-git-win",
+					"scmType": "ExternalGit",
+					"use32BitWorkerProcess": true,
+					"webSocketsEnabled": false,
+					"alwaysOn": true,
+					"managedPipelineMode": "Integrated",
+					"virtualApplications": [
+						{
+							"virtualPath": "/",
+							"physicalPath": "site\\wwwroot",
+							"preloadEnabled": true
+						}
+					],
+					"loadBalancing": "LeastRequests",
+					"experiments": {
+						"rampUpRules": []
+					},
+					"autoHealEnabled": false,
+					"localMySqlEnabled": false,
+					"ipSecurityRestrictions": [
+						{
+							"ipAddress": "Any",
+							"action": "Allow",
+							"priority": 1,
+							"name": "Allow all",
+							"description": "Allow all access"
+						}
+					],
+					"scmIpSecurityRestrictions": [
+						{
+							"ipAddress": "Any",
+							"action": "Allow",
+							"priority": 1,
+							"name": "Allow all",
+							"description": "Allow all access"
+						}
+					],
+					"scmIpSecurityRestrictionsUseMain": false,
+					"http20Enabled": false,
+					"minTlsVersion": "1.2",
+					"ftpsState": "AllAllowed",
+					"reservedInstanceCount": 0
+				}
+            }
+        
+        }     
+      
+    ]
+}
